@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-catalog
+    name: api-checkout
   data:
     mongodb:
       host: localhost
@@ -8,6 +8,6 @@ spring:
       database: tcc-mongodb
 
 server:
-  port: 8000
+  port: 8002
   error:
     include-stacktrace: ON_PARAM
