@@ -1,6 +1,7 @@
 package tcc.api_catalog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tcc.api_catalog.model.Product;
 import tcc.api_catalog.repository.ProductRepository;
@@ -15,6 +16,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product create(Product product) {
         return this.productRepository.insert(product);
+    }
+
+    @Override
+    public Boolean batchCreate(List<Product> products) {
+        try {
+            products.forEach(this::create);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -43,9 +55,22 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setName(product.getName());
         existingProduct.setDescription(product.getDescription());
         existingProduct.setPrice(product.getPrice());
+        existingProduct.setRating(product.getRating());
+        existingProduct.setDiscount(product.getDiscount());
+        existingProduct.setPriceWithDiscount(product.getPriceWithDiscount());
         existingProduct.setStock(product.getStock());
         existingProduct.setImg(product.getImg());
         
+        return this.productRepository.save(existingProduct);
+    }
+
+    @Override
+    public Product updateRating(String id, Integer newRating) {
+        Product existingProduct = this.productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+
+        existingProduct.setRating(newRating);
+
         return this.productRepository.save(existingProduct);
     }
 }
