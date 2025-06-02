@@ -1,7 +1,6 @@
 package tcc.api_catalog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tcc.api_catalog.model.Product;
 import tcc.api_catalog.repository.ProductRepository;

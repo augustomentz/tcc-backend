@@ -1,6 +1,9 @@
 spring:
   application:
     name: api-cart
+  cloud:
+    compatibility-verifier:
+      enabled: false
   data:
     mongodb:
       host: localhost
@@ -11,3 +14,14 @@ server:
   port: 8001
   error:
     include-stacktrace: ON_PARAM
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+
+app:
+  api-catalog-url: "http://localhost:8000"
