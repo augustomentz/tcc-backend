@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tcc.api_cart.feign.ApiCatalogFeign;
-import tcc.api_cart.model.ApiResponse;
+import tcc.api_cart.model.Origin;
+import tcc.api_cart.response.ApiResponse;
 import tcc.api_cart.model.Cart;
 import tcc.api_cart.model.CartProduct;
 import tcc.api_cart.model.Product;
@@ -27,7 +28,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart create(Cart cart) {
-        cart.setDeliveryFee(cart.getDeliveryFee());
+        cart.setShipping(cart.getShipping());
         cart.setTotal(0.0);
         cart.setDiscount(0.0);
         cart.setDiscountPercentage(0.0);
@@ -38,7 +39,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart findById(String id) {
-        int fee = new Random().nextInt(41) + 5;
+        int shipping = new Random().nextInt(41) + 5;
 
         return this.cartRepository
             .findById(id)
@@ -47,7 +48,7 @@ public class CartServiceImpl implements CartService {
                     Cart
                         .builder()
                         .id(id)
-                        .deliveryFee((double) fee)
+                        .shipping((double) shipping)
                         .build()
                 )
             );
@@ -60,7 +61,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public String deleteById(String id) {
-        this.cartRepository.findById(id)
+        Cart cart = this.cartRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found with id: " + id));
 
         this.cartRepository.deleteById(id);
@@ -77,7 +78,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Boolean addItem(String cartId, String itemId) {
+    public Boolean addItem(String cartId, String itemId, Integer quantity, Origin origin) {
         Cart cart = this.findById(cartId);
 
         ResponseEntity<ApiResponse<Product>> response = this.apiCatalog.getProductById(itemId);
@@ -99,18 +100,27 @@ public class CartServiceImpl implements CartService {
                     .img(product.getImg())
                     .name(product.getName())
                     .price(product.getPrice())
-                    .stock(product.getStock())
+                    .priceWithDiscount(product.getPriceWithDiscount())
                     .discount(product.getDiscount())
+                    .stock(product.getStock())
                     .quantity(1)
                     .build()
             );
         } else {
-            existingProduct.get().setQuantity(existingProduct.get().getQuantity() + 1);
+            if (Objects.nonNull(origin) && origin.equals(Origin.CATALOG)) {
+                existingProduct.get().setQuantity(existingProduct.get().getQuantity() + 1);
+            } else {
+                existingProduct.get().setQuantity(quantity);
+            }
         }
 
-        this.cartRepository.save(cart);
+        try {
+            calculateAndSaveCart(cart);
 
-        return true;
+            return true;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -120,13 +130,38 @@ public class CartServiceImpl implements CartService {
         final boolean removed = cart.getProducts().removeIf(item -> item.getId().equals(itemId));
 
         if (removed) {
-            this.cartRepository.save(cart);
+            this.calculateAndSaveCart(cart);
         }
 
         return removed;
     }
 
     @Override
-    public void calculateCart(Cart cart) {
+    public Cart calculateAndSaveCart(Cart cart) {
+        cart.getProducts().forEach(product -> {
+            double totalProduct = product.getPriceWithDiscount() * product.getQuantity();
+
+            product.setTotal(totalProduct);
+        });
+    
+        Double total = cart.getProducts().stream()
+            .mapToDouble(product -> product.getPrice() * product.getQuantity())
+            .sum(); // sum total without discount considering quantity
+        Double totalWithDiscount = cart.getProducts().stream()
+            .mapToDouble(product -> product.getPriceWithDiscount() * product.getQuantity())
+            .sum(); // sum total with discount considering quantity
+            
+        Double discount = total - totalWithDiscount;
+        Double discountPercentage = 0.0;
+    
+        if (total > 0) {
+            discountPercentage = (discount * 100) / total;
+        }
+    
+        cart.setTotal(totalWithDiscount);
+        cart.setDiscount(discount);
+        cart.setDiscountPercentage(discountPercentage);
+    
+        return this.cartRepository.save(cart);
     }
 }

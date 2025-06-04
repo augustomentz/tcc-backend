@@ -21,5 +21,5 @@ public class Cart {
     Double total;
     Double discountPercentage;
     Double discount;
-    Double deliveryFee;
+    Double shipping;
 }

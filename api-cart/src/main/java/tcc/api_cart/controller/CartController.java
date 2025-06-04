@@ -3,8 +3,9 @@ package tcc.api_cart.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tcc.api_cart.model.ApiResponse;
+import tcc.api_cart.response.ApiResponse;
 import tcc.api_cart.model.Cart;
+import tcc.api_cart.request.UpdateItemRequest;
 import tcc.api_cart.service.CartServiceImpl;
 
 
@@ -21,9 +22,18 @@ public class CartController {
         return ResponseEntity.ok(ApiResponse.success("id"));
     }
 
-    @PostMapping("/{cartId}/{itemId}")
-    public ResponseEntity<ApiResponse<Boolean>> addItem(@PathVariable String cartId, @PathVariable String itemId) {
-        return ResponseEntity.ok(ApiResponse.success(this.cartService.addItem(cartId, itemId)));
+    @PostMapping("/update-item")
+    public ResponseEntity<ApiResponse<Boolean>> addItem(@RequestBody UpdateItemRequest updateItemRequest) {
+        return ResponseEntity.ok(
+            ApiResponse.success(
+                this.cartService.addItem(
+                    updateItemRequest.getCartId(),
+                    updateItemRequest.getItemId(),
+                    updateItemRequest.getQuantity(),
+                    updateItemRequest.getOrigin()
+                )
+            )
+        );
     }
 
     @PutMapping

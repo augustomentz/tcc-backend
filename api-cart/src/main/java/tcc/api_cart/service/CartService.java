@@ -2,6 +2,7 @@ package tcc.api_cart.service;
 
 import tcc.api_cart.model.Cart;
 import tcc.api_cart.model.CartProduct;
+import tcc.api_cart.model.Origin;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ public interface CartService {
 
     Cart findById(String id);
 
-    Boolean addItem(String cartId, String itemId);
+    Boolean addItem(String cartId, String itemId, Integer quantity, Origin origin);
 
     Boolean deleteItem(String cartId, String itemId);
 
-    void calculateCart(Cart cart);
+    Cart calculateAndSaveCart(Cart cart);
 }

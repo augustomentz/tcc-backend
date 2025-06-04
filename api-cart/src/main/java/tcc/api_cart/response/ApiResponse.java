@@ -1,4 +1,4 @@
-package tcc.api_cart.model;
+package tcc.api_cart.response;
 
 import lombok.Getter;
 

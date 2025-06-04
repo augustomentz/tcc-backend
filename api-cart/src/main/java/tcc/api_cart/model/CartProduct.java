@@ -14,7 +14,9 @@ public class CartProduct {
     String name;
     String img;
     Double price;
+    Double priceWithDiscount;
     Double discount;
+    Double total;
     Integer quantity;
     Integer stock;
 }
