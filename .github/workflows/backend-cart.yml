@@ -25,10 +25,3 @@ jobs:
       run: |
         cd api-cart
         ./mvnw clean verify
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: cart-api-build
-        path: api-cart/target/*.jar
-        retention-days: 5
