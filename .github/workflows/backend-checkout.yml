@@ -1,0 +1,34 @@
+name: backend-checkout
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'api-checkout/**'
+      - '.github/workflows/backend-checkout.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: |
+        cd api-checkout
+        ./mvnw clean verify
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: checkout-api-build
+        path: api-checkout/target/*.jar
+        retention-days: 5
