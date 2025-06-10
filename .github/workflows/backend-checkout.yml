@@ -24,4 +24,5 @@ jobs:
     - name: Build with Maven
       run: |
         cd api-checkout
+        chmod +x ./mvnw
         ./mvnw clean verify

@@ -24,4 +24,5 @@ jobs:
     - name: Build with Maven
       run: |
         cd api-cart
+        chmod +x ./mvnw
         ./mvnw clean verify
