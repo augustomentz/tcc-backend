@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public String deleteById(String id) {
-        Cart cart = this.cartRepository.findById(id)
+        this.cartRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found with id: " + id));
 
         this.cartRepository.deleteById(id);

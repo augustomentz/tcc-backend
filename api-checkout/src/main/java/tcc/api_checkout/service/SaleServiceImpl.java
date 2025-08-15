@@ -19,8 +19,9 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale findById(String id) {
-        return this.saleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sale not found"));
+        return this.saleRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Sale not found"));
     }
 
     @Override

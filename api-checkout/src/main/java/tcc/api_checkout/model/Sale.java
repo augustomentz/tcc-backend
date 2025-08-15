@@ -16,4 +16,8 @@ public class Sale {
     @Id
     private String id;
     private Double total;
+    private Address address;
+    private Payment payment;
+    private String cartId;
+    private Integer productAmount;
 }
