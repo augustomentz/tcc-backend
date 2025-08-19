@@ -3,7 +3,7 @@ spring:
     name: api-checkout
   data:
     mongodb:
-      host: localhost
+      host: host.docker.internal
       port: 27017
       database: tcc-mongodb
 

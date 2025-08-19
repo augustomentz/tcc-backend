@@ -8,13 +8,16 @@ RUN mvn dependency:go-offline -B
 
 COPY src ./src
 
-RUN mvn clean package -DskipTests -B  # Gera JAR otimizado
+ARG SKIP_TESTS=true  # Arg para controlar skip de tests
+RUN mvn clean package -DskipTests=$SKIP_TESTS -B
 
-# Etapa 2: Runtime leve com JRE 21
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
 COPY --from=build /app/target/*.jar app.jar
 
-EXPOSE 8080
+ARG PORT=8080  # Arg para porta dinâmica
+EXPOSE $PORT
+
+CMD ["java", "-jar", "app.jar"]
