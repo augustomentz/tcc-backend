@@ -22,6 +22,3 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: basic
-
-app:
-  api-catalog-url: "http://localhost:8000"

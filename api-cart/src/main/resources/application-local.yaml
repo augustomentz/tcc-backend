@@ -1,0 +1,2 @@
+app:
+  api-catalog-url: "http://localhost:8000"
