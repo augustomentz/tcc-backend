@@ -1,4 +1,4 @@
-name: Build and Push Docker Image - Backend Cart (Java)
+name: Build
 
 on:
   push:
@@ -61,7 +61,7 @@ jobs:
         with:
           image-ref: '${{ steps.meta.outputs.tags }}'
           format: 'table'
-          exit-code: '1'  # Falha se vulnerabilidades críticas
+          exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
