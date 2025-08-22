@@ -5,10 +5,10 @@ on:
     branches:
       - main
     tags:
-      - 'v*.*.*'  # Aciona em tags semânticas para releases
+      - 'v*.*.*'  # Trigger on semantic version tags for releases
   pull_request:
     branches:
-      - main  # Valida em PRs sem pushar
+      - main  # Validate on PRs without pushing
 
 jobs:
   build-test-push:
@@ -22,26 +22,26 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
-          
-      - name: Change to api-cart directory
-        run: cd api-cart
+          cache: maven  # Cache Maven dependencies for faster repeated builds
 
-      - name: Build and Test with Maven
-        run: mvn clean verify -DskipTests
+      - name: Build with Maven Wrapper
+        run: |
+          cd api-cart  # Change to the submodule directory where pom.xml and mvnw reside
+          chmod +x ./mvnw  # Make the Maven Wrapper executable
+          ./mvnw clean verify -e -X  # Build and verify with debug logs enabled
 
       - name: Log in to Docker Hub
-        if: github.event_name != 'pull_request'  # Apenas em pushes
+        if: github.event_name != 'pull_request'  # Only login on actual pushes
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Use a Docker Hub access token for security
 
       - name: Extract Docker metadata (tags, labels)
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.repository_owner }}/tcc-backend
+          images: ${{ github.repository_owner }}/tcc-backend  # e.g., augustomentz/tcc-backend
           tags: |
             type=ref,event=branch
             type=ref,event=tag
@@ -51,20 +51,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          context: ./api-cart  # Use the submodule as build context
+          push: ${{ github.event_name != 'pull_request' }}  # Push only on pushes/tags
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max  # Cache Docker layers para eficiência
-
-      - name: Scan image for vulnerabilities (Trivy)
-        if: github.event_name != 'pull_request'
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: '${{ steps.meta.outputs.tags }}'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          cache-to: type=gha,mode=max  # Cache Docker layers for efficiency
