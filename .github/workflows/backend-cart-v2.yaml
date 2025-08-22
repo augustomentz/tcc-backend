@@ -37,6 +37,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}  # Use a Docker Hub access token for security
 
+      - name: Set up Docker Buildx  # New step: Enables Buildx for cache support (fixes the driver error)
+        uses: docker/setup-buildx-action@v3
+
       - name: Extract Docker metadata (tags, labels)
         id: meta
         uses: docker/metadata-action@v5
