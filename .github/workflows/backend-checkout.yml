@@ -1,4 +1,4 @@
-name: Build - API Catalog
+name: Build - API Checkout
 
 on:
   push:
