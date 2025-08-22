@@ -2,8 +2,10 @@ name: Build - API Checkout
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+    paths:
+      - 'api-checkout/**'
+      - '.github/workflows/backend-checkout.yml'
     tags:
       - 'v*.*.*'  # Trigger on semantic version tags for releases
   pull_request:
