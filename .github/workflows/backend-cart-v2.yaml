@@ -44,7 +44,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.repository_owner }}/tcc-backend  # e.g., augustomentz/tcc-backend
+          images: ahmentz/tcc-backend  # e.g., augustomentz/tcc-backend
           tags: |
             type=ref,event=branch
             type=ref,event=tag
