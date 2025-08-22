@@ -22,10 +22,13 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven  # Cache dependências Maven para builds mais rápidos
+          cache: maven
+          
+      - name: Change to api-cart directory
+        run: cd api-cart
 
       - name: Build and Test with Maven
-        run: mvn clean verify  # Inclui testes; remova -DskipTests se quiser rodar
+        run: mvn clean verify -DskipTests
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'  # Apenas em pushes
