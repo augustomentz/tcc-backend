@@ -2,8 +2,10 @@ name: Build - API Catalog
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+    paths:
+      - 'api-catalog/**'
+      - '.github/workflows/backend-catalog.yml'
     tags:
       - 'v*.*.*'  # Trigger on semantic version tags for releases
   pull_request:
