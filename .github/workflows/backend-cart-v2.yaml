@@ -28,7 +28,7 @@ jobs:
         run: |
           cd api-cart  # Change to the submodule directory where pom.xml and mvnw reside
           chmod +x ./mvnw  # Make the Maven Wrapper executable
-          ./mvnw clean verify -e -X  # Build and verify with debug logs enabled
+          ./mvnw clean install
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'  # Only login on actual pushes
