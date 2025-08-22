@@ -3,11 +3,11 @@ spring:
     name: api-checkout
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: tcc-mongodb
+      host: "${MONGODB_HOST:localhost}"
+      port: "${MONGODB_PORT:27017}"
+      database: "${MONGODB_DATABASE:tcc-mongodb}"
 
 server:
-  port: 8002
+  port: "${SERVER_PORT:8002}"
   error:
     include-stacktrace: ON_PARAM

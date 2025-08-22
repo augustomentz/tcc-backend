@@ -3,14 +3,14 @@ spring:
     name: api-catalog
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: tcc-mongodb
+      host: "${MONGODB_HOST:localhost}"
+      port: "${MONGODB_PORT:27017}"
+      database: "${MONGODB_DATABASE:tcc-mongodb}"
 
 server:
-  port: 8000
+  port: "${SERVER_PORT:8000}"
   error:
     include-stacktrace: ON_PARAM
 
 app:
-  api-cart-url: "http://localhost:8001"
+  api-cart-url: "${API_CART_URL:http://localhost:8001}"
