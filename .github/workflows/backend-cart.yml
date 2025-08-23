@@ -46,7 +46,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ahmentz/tcc-backend  # e.g., augustomentz/tcc-backend
+          images: ahmentz/tcc-backend  # e.g., ahmentz/tcc-backend
+          flavor: |
+            prefix=tcc-backend-cart-
           tags: |
             type=ref,event=branch
             type=ref,event=tag
