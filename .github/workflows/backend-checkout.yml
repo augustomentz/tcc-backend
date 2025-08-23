@@ -47,6 +47,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ahmentz/tcc-backend  # e.g., augustomentz/tcc-backend
+          flavor: |
+            prefix=tcc-backend-checkout-
           tags: |
             type=ref,event=branch
             type=ref,event=tag
