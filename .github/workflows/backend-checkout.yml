@@ -48,7 +48,7 @@ jobs:
         with:
           images: ahmentz/tcc-backend  # e.g., augustomentz/tcc-backend
           flavor: |
-            prefix=tcc-backend-checkout-
+            prefix=api-checkout-
           tags: |
             type=ref,event=branch
             type=ref,event=tag
