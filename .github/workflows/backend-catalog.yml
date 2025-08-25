@@ -74,10 +74,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
+      - name: Set up gcloud SDK
+        uses: google-github-actions/setup-gcloud@v2
         with:
           version: 'latest'
+          install_components: 'gke-gcloud-auth-plugin'
 
       - name: Configure kubeconfig
         run: |
