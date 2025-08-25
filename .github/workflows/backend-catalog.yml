@@ -78,14 +78,14 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           version: 'latest'
-          install_components: 'gke-gcloud-auth-plugin'
-
-      - name: Configure kubeconfig
+          project_id: tcc-cluster-k8s
+          credentials: ${{ secrets.GCP_CREDENTIALS }}
+          
+      - name: Configure kubectl with gcloud auth
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ~/.kube/config
-          chmod 600 ~/.kube/config
-
+          gcloud auth activate-service-account --key-file=<(echo "${{ secrets.GCP_CREDENTIALS }}")
+          gcloud container clusters get-credentials cluster-tcc-1 --zone southamerica-east1 --project tcc-cluster-k8s
+          
       - name: Deploy to GKE
         run: kubectl apply -f ./k8s/api-catalog/deployment.yaml
 
