@@ -6,6 +6,7 @@ on:
     paths:
       - 'api-catalog/**'
       - '.github/workflows/backend-catalog.yml'
+      - 'k8s/api-catalog/*'
     tags:
       - 'v*.*.*'
   pull_request:
@@ -73,17 +74,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
+      - name: Set up gcloud SDK
+        uses: google-github-actions/setup-gcloud@v2
         with:
           version: 'latest'
-
-      - name: Configure kubeconfig
+          project_id: tcc-cluster-k8s
+          install_components: 'gke-gcloud-auth-plugin'
+          
+      - name: Configure kubectl with gcloud auth
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ~/.kube/config
-          chmod 600 ~/.kube/config
-
+          echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > /tmp/gcp-credentials.json
+          gcloud auth activate-service-account --key-file=/tmp/gcp-credentials.json
+          gcloud container clusters get-credentials cluster-tcc-1 --zone southamerica-east1 --project tcc-cluster-k8s
+          
       - name: Deploy to GKE
         run: kubectl apply -f ./k8s/api-catalog/deployment.yaml
 
