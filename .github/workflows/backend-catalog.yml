@@ -6,6 +6,7 @@ on:
     paths:
       - 'api-catalog/**'
       - '.github/workflows/backend-catalog.yml'
+      - 'k8s/api-catalog/*'
     tags:
       - 'v*.*.*'
   pull_request:
