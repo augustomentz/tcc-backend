@@ -32,7 +32,7 @@ spec:
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongodb
+                  name: mongodb-1756091671
                   key: mongodb-root-password
             - name: SERVER_PORT
               value: "8000"
