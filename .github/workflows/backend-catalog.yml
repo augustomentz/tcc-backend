@@ -79,7 +79,7 @@ jobs:
         with:
           version: 'latest'
           project_id: tcc-cluster-k8s
-          credentials: ${{ secrets.GCP_CREDENTIALS }}
+          install_components: 'gke-gcloud-auth-plugin'
           
       - name: Configure kubectl with gcloud auth
         run: |
