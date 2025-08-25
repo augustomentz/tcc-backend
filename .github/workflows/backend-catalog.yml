@@ -83,6 +83,7 @@ jobs:
           
       - name: Configure kubectl with gcloud auth
         run: |
+          cat ${{ secrets.GCP_CREDENTIALS }}
           gcloud auth activate-service-account --key-file=<(echo "${{ secrets.GCP_CREDENTIALS }}")
           gcloud container clusters get-credentials cluster-tcc-1 --zone southamerica-east1 --project tcc-cluster-k8s
           
