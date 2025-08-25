@@ -17,6 +17,13 @@ spec:
           image: ahmentz/tcc-backend:api-catalog-latest
           ports:
             - containerPort: 8000
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
           env:
             - name: SPRING_DATA_MONGODB_URI
               value: mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@mongodb:27017/tcc-mongodb?authSource=admin
