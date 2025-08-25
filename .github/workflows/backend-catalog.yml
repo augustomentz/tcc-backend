@@ -86,6 +86,7 @@ jobs:
           echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > /tmp/gcp-credentials.json
           gcloud auth activate-service-account --key-file=/tmp/gcp-credentials.json
           gcloud container clusters get-credentials cluster-tcc-1 --zone southamerica-east1 --project tcc-cluster-k8s
+          kubectl get secrets
           
       - name: Deploy to GKE
         run: kubectl apply -f ./k8s/api-catalog/deployment.yaml
