@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcc-api-checkout-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcc-api-checkout-backend
+  template:
+    metadata:
+      labels:
+        app: tcc-api-checkout-backend
+    spec:
+      containers:
+        - name: backend
+          image: ahmentz/tcc-backend:api-checkout-latest
+          ports:
+            - containerPort: 8002
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@mongodb:27017/tcc-mongodb?authSource=admin
+            - name: MONGODB_USERNAME
+              value: root
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: mongodb-root-password
+            - name: SERVER_PORT
+              value: "8002"
