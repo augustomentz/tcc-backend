@@ -30,10 +30,7 @@ spec:
             - name: MONGODB_USERNAME
               value: root
             - name: MONGODB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: tcc-db-mongodb
-                  key: mongodb-root-password
+              value: eZD04dIPHg
             - name: SERVER_PORT
               value: "8000"
             - name: API_CART_URL
