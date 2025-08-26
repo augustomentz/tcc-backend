@@ -59,6 +59,23 @@ jobs:
             type=sha
             latest
 
+      - name: Generate Semantic Version Tag
+        id: version
+        run: |
+          # Pega a última tag Git (ex.: v0.0.0) ou inicia com v0.0.0
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          
+          # Incrementa PATCH (ex.: v0.0.0 -> v0.0.1). Para MINOR, use sed para .x.0
+          NEW_TAG=$(echo $LAST_TAG | awk -F. '{print $1"."$2"."($3+1)}')
+          
+          # Se primeira vez, use v0.0.1
+          if [ "$LAST_TAG" = "v0.0.0" ]; then
+            NEW_TAG="v0.0.1"
+          fi
+        
+          echo "TAG=$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "Building with semantic tag: $NEW_TAG"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
