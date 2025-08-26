@@ -112,7 +112,7 @@ jobs:
             kubectl apply -f ./.k8s/api-cart/deployment.yml
             kubectl apply -f ./.k8s/api-cart/service.yml
             kubectl apply -f ./.k8s/api-cart/ingress.yml
-git a
+
       - name: Verify Deployment
         run: kubectl rollout status deployment/tcc-api-cart-backend --timeout=120s
 
