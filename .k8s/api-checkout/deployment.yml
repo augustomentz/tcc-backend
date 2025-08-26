@@ -15,6 +15,7 @@ spec:
       containers:
         - name: backend
           image: ahmentz/tcc-backend:api-checkout-latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8002
           resources:

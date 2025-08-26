@@ -15,6 +15,7 @@ spec:
       containers:
         - name: backend
           image: ahmentz/tcc-backend:api-catalog-latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           resources:
