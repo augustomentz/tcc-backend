@@ -26,11 +26,14 @@ spec:
               memory: "1Gi"
           env:
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
+              value: mongodb://root:$(MONGODB_PASSWORD)@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
             - name: MONGODB_USERNAME
               value: root
             - name: MONGODB_PASSWORD
-              value: eZD04dIPHg
+              valueFrom:
+                secretKeyRef:
+                  name: tcc-db-mongodb
+                  key: mongodb-root-password
             - name: SERVER_PORT
               value: "8000"
             - name: API_CART_URL
