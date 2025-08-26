@@ -30,4 +30,4 @@ spec:
             - name: SERVER_PORT
               value: "8000"
             - name: API_CART_URL
-              value: "http://api-cart-service:8001"
+              value: "http://api-catalog-backend-service:8001"

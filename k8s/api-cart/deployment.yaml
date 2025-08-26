@@ -30,4 +30,4 @@ spec:
             - name: SERVER_PORT
               value: "8001"
             - name: API_CATALOG_URL
-              value: "http://api-catalog-service:8000"
+              value: "http://api-catalog-backend-service:8000"
