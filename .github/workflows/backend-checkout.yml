@@ -109,8 +109,8 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-            kubectl apply -f ./.k8s/api-checkout/deployment.yaml
-            kubectl apply -f ./.k8s/api-checkout/service.yaml
+            kubectl apply -f ./.k8s/api-checkout/deployment.yml
+            kubectl apply -f ./.k8s/api-checkout/service.yml
             kubectl apply -f ./.k8s/api-checkout/ingress.yml
 
       - name: Verify Deployment
