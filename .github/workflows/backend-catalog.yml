@@ -106,8 +106,12 @@ jobs:
 
       - name: Update Deployment with New Tag
         run: |
-          TAG=${{ needs.build-test-push.outputs.TAG || steps.version.outputs.TAG }}
-          sed -i "s|:latest|:$(echo $TAG)|g" ./.k8s/api-catalog/deployment.yml
+          TAG=${{ needs.build-test-push.outputs.TAG }}
+          if [ -z "$TAG" ]; then
+            echo "Error: TAG is empty"
+            exit 1
+          fi
+          sed -i "s|:api-catalog-latest|:api-catalog-$TAG|g" ./k8s/api-catalog/deployment.yml
           echo "Updated image tag to $TAG in deployment.yml"
 
       - name: Deploy to GKE
