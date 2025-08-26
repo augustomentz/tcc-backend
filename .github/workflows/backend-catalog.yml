@@ -111,7 +111,7 @@ jobs:
             echo "Error: TAG is empty"
             exit 1
           fi
-          sed -i "s|:api-catalog-latest|:api-catalog-$TAG|g" ./k8s/api-catalog/deployment.yml
+          sed -i "s|:api-catalog-latest|:api-catalog-$TAG|g" ./.k8s/api-catalog/deployment.yml
           echo "Updated image tag to $TAG in deployment.yml"
 
       - name: Deploy to GKE
