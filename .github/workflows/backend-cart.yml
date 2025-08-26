@@ -9,9 +9,12 @@ on:
       - 'k8s/api-cart/*'
     tags:
       - 'v*.*.*'
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: false
+        default: 'development'
 
 jobs:
   build-test-push:
@@ -86,12 +89,11 @@ jobs:
           echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > /tmp/gcp-credentials.json
           gcloud auth activate-service-account --key-file=/tmp/gcp-credentials.json
           gcloud container clusters get-credentials cluster-tcc-1 --zone southamerica-east1 --project tcc-cluster-k8s
-          kubectl get secrets
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f ./k8s/api-cart/deployment.yaml
-          kubectl apply -f ./k8s/api-cart/service.yaml
+          kubectl apply -f ././k8s/api-cart/deployment.yml
+          kubectl apply -f ././k8s/api-cart/service.yml
 
       - name: Verify Deployment
         run: kubectl rollout status deployment/tcc-api-cart-backend --timeout=120s
