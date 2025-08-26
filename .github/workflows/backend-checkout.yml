@@ -94,6 +94,7 @@ jobs:
         run: |
             kubectl apply -f ./.k8s/api-checkout/deployment.yaml
             kubectl apply -f ./.k8s/api-checkout/service.yaml
+            kubectl apply -f ./.k8s/api-checkout/ingress.yml
 
       - name: Verify Deployment
         run: kubectl rollout status deployment/tcc-api-checkout-backend --timeout=120s

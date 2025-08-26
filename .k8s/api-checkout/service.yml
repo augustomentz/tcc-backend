@@ -8,4 +8,4 @@ spec:
   ports:
     - port: 8002
       targetPort: 8002
-  type: LoadBalancer
+  type: ClusterIP
