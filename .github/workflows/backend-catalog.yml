@@ -51,13 +51,10 @@ jobs:
       - name: Generate Semantic Version Tag
         id: version
         run: |
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          NEW_TAG=$(echo $LAST_TAG | awk -F. '{print $1"."$2"."($3+1)}')
-          if [ "$LAST_TAG" = "v0.0.0" ]; then
-            NEW_TAG="v0.0.1"
-          fi
+          RUN_NUMBER=${{ github.run_number }}
+          NEW_TAG="0.0.$RUN_NUMBER"
           echo "TAG=$NEW_TAG" >> $GITHUB_OUTPUT
-          echo "Building with semantic tag: $NEW_TAG"
+          echo "Building with image tag: $NEW_TAG"
 
       - name: Extract Docker metadata (tags, labels)
         id: meta
