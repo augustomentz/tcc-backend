@@ -17,7 +17,7 @@ spec:
           image: ahmentz/tcc-backend:api-cart-latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 8001
           resources:
             requests:
               cpu: "0.5"
