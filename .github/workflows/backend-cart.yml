@@ -6,6 +6,7 @@ on:
     paths:
       - 'api-cart/**'
       - '.github/workflows/backend-cart.yml'
+      - 'k8s/api-cart/*'
     tags:
       - 'v*.*.*'
   pull_request:

@@ -4,7 +4,7 @@ metadata:
   name: api-cart-backend-service
 spec:
   selector:
-    app: api-cart-backend
+    app: tcc-api-cart-backend
   ports:
     - port: 8001
       targetPort: 8001
