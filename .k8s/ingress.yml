@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-cart-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/upstream-vhost: api-cart-backend-service.default.svc.cluster.local
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60s"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60s"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /catalog
+            pathType: Prefix
+            backend:
+              service:
+                name: api-catalog-backend-service
+                port:
+                  number: 8000
+          - path: /cart
+            pathType: Prefix
+            backend:
+              service:
+                name: api-cart-backend-service
+                port:
+                  number: 8001
+          - path: /checkout
+            pathType: Prefix
+            backend:
+              service:
+                name: api-checkout-backend-service
+                port:
+                  number: 8002

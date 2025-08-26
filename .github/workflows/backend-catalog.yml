@@ -111,7 +111,6 @@ jobs:
         run: |
             kubectl apply -f ./.k8s/api-catalog/deployment.yml
             kubectl apply -f ./.k8s/api-catalog/service.yml
-            kubectl apply -f ./.k8s/api-catalog/ingress.yml
 
       - name: Verify Deployment
         run: kubectl rollout status deployment/tcc-api-catalog-backend --timeout=120s
