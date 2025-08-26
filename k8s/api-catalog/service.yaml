@@ -4,7 +4,7 @@ metadata:
   name: api-catalog-backend-service
 spec:
   selector:
-    app: api-catalog-backend
+    app: tcc-api-catalog-backend
   ports:
     - port: 8000
       targetPort: 8000
