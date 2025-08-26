@@ -33,7 +33,7 @@ spec:
                   name: tcc-db-mongodb
                   key: mongodb-root-password
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
+              valueFrom: mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
             - name: SERVER_PORT
               value: "8000"
             - name: API_CART_URL
