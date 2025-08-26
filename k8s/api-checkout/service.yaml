@@ -4,7 +4,7 @@ metadata:
   name: api-checkout-backend-service
 spec:
   selector:
-    app: api-checkout-backend
+    app: tcc-api-checkout-backend
   ports:
     - port: 8002
       targetPort: 8002
