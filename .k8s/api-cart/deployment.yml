@@ -18,6 +18,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8001
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8001
+            initialDelaySeconds: 45
+            periodSeconds: 10
+            timeoutSeconds: 5
           resources:
             requests:
               cpu: "0.5"
