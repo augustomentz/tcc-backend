@@ -12,5 +12,14 @@ server:
   error:
     include-stacktrace: ON_PARAM
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
 app:
   api-cart-url: "${API_CART_URL:http://localhost:8001}"

@@ -7,6 +7,15 @@ spring:
       port: "${MONGODB_PORT:27017}"
       database: "${MONGODB_DATABASE:tcc-mongodb}"
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
 server:
   port: "${SERVER_PORT:8002}"
   error:
