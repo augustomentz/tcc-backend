@@ -1,6 +1,5 @@
 package tcc.api_catalog.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tcc.api_catalog.model.ApiResponse;
@@ -10,7 +9,7 @@ import tcc.api_catalog.service.ProductServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/catalog")
 public class ProductController {
     private final ProductServiceImpl productService;
 

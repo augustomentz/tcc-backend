@@ -8,7 +8,7 @@ import tcc.api_checkout.service.SaleServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sales")
+@RequestMapping("/checkout")
 public class SaleController {
     @Autowired
     private SaleServiceImpl saleService;
