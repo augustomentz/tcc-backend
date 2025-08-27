@@ -1,13 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-cart-ingress
+  name: tcc-api-ingress
   namespace: default
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/upstream-vhost: api-cart-backend-service.default.svc.cluster.local
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60s"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "60s"
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
     - http:
