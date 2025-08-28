@@ -6,7 +6,7 @@ on:
     paths:
       - 'api-catalog/**'
       - '.github/workflows/backend-catalog.yml'
-      - 'k8s/api-catalog/*'
+      - '.k8s/api-catalog/*'
     tags:
       - 'v*.*.*'
   workflow_dispatch:

@@ -6,7 +6,7 @@ on:
     paths:
       - 'api-checkout/**'
       - '.github/workflows/backend-checkout.yml'
-      - 'k8s/api-checkout/*'
+      - '.k8s/api-checkout/*'
     tags:
       - 'v*.*.*'
   workflow_dispatch:
