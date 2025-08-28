@@ -9,6 +9,6 @@ import tcc.api_cart.model.Product;
 
 @FeignClient(name = "api-catalog", url = "${app.api-catalog-url}")
 public interface ApiCatalogFeign {
-    @GetMapping("/products/{id}")
+    @GetMapping("/catalog/{id}")
     ResponseEntity<ApiResponse<Product>> getProductById(@PathVariable String id);
 }
