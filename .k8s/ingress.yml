@@ -4,9 +4,9 @@ metadata:
   name: tcc-api-ingress
   namespace: default
   annotations:
-    kubernetes.io/ingress.class: "gce"
     cloud.google.com/health-check-path: /actuator/health
 spec:
+  ingressClassName: gce
   rules:
     - http:
         paths:

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: api-catalog-backend-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: tcc-api-catalog-backend
   ports:
