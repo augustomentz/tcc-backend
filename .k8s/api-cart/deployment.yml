@@ -29,13 +29,13 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8001
-            initialDelaySeconds: 3
+            initialDelaySeconds: 60
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8001
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 5
           env:
