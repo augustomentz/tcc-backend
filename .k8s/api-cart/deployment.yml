@@ -18,6 +18,19 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8001
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8001
+            initialDelaySeconds: 3
+            periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -25,13 +38,6 @@ spec:
             initialDelaySeconds: 45
             periodSeconds: 10
             timeoutSeconds: 5
-          resources:
-            requests:
-              cpu: "200m"
-              memory: "256Mi"
-            limits:
-              cpu: "500m"
-              memory: "1Gi"
           env:
             - name: SPRING_DATA_MONGODB_URI
               value: mongodb://root:IdyfPnp3wp@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
