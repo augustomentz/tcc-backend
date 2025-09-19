@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tcc-mongodb
+spec:
+  serviceName: "tcc-mongodb"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcc-mongodb
+  template:
+    metadata:
+      labels:
+        app: tcc-mongodb
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:8.0
+          ports:
+            - containerPort: 27017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "root"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "Pefkf5iy"
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi

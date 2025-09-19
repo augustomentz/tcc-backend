@@ -40,7 +40,7 @@ spec:
             timeoutSeconds: 5
           env:
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://root:IdyfPnp3wp@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
+              value: mongodb://root:Pefkf5iy@tcc-db-mongodb:27017/tcc-mongodb?authSource=admin
             - name: SERVER_PORT
               value: "8001"
             - name: API_CATALOG_URL
