@@ -17,6 +17,8 @@ WORKDIR /app
 
 COPY --from=build /app/target/*.jar app.jar
 
+RUN apk add --no-cache stress-ng
+
 ARG PORT=8080  # Arg para porta dinâmica
 EXPOSE $PORT
 
